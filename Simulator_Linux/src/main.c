@@ -31,7 +31,7 @@ short sError = pdFALSE;
 	pxQueue = ( xQueueHandle * ) pvParameters;
 
 	for( ;; )
-	{		
+	{
 		for( usLoop = 0; usLoop < usNumToProduce; ++usLoop )
 		{
 			/* Send an incrementing number on the queue without blocking. */
@@ -56,7 +56,7 @@ xQueueHandle *pxQueue;
 	pxQueue = ( xQueueHandle * ) pvParameters;
 
 	for( ;; )
-	{		
+	{
 		while( uxQueueMessagesWaiting( *pxQueue ) )
 		{
 			if( xQueueReceive( *pxQueue, &usData, ( portTickType ) 0 ) == pdPASS )
