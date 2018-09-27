@@ -29,28 +29,28 @@ parameter. */
 void vTask1(void *pvParameters )
 {
 	const char *pcTaskName = (char*) pvParameters;
-	volatile unsigned long ul;
+	const TickType_t xDelay250ms = pdMS_TO_TICKS( 250 );
 	/* As per most tasks, this task is implemented in an infinite loop. */
 	for( ;; )
 	{
 		/* Print out the name of this task. */
 		printf("%s\n", pcTaskName );
 		/* Delay for a period. */
-    vTaskDelay(250 / portTICK_RATE_MS);
+    vTaskDelay( xDelay250ms );
 	}
 }
 
 void vTask2(void *pvParameters )
 {
 	const char *pcTaskName = (char*)pvParameters;
-	volatile unsigned long ul;
+	const TickType_t xDelay250ms = pdMS_TO_TICKS( 250 );
 	/* As per most tasks, this task is implemented in an infinite loop. */
 	for( ;; )
 	{
 		/* Print out the name of this task. */
 		printf("%s\n",pcTaskName );
 		/* Delay for a period. */
-    vTaskDelay(250 / portTICK_RATE_MS);
+    vTaskDelay( xDelay250ms );
 	}
 }
 /********************************************************/

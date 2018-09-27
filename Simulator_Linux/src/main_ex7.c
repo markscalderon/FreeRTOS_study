@@ -8,32 +8,60 @@
 #include "queue.h"
 #define mainDELAY_LOOP_COUNT		( 0xfffff )
 
-void vContinuousProcessingTask(void *pvParameters );
+void vContinuousProcessingTask1(void *pvParameters );
+void vContinuousProcessingTask2(void *pvParameters );
+
 void vPeriodicTask(void *pvParameters );
-static const char *pcTextForTask1 = "Continuous processing is running\r\n";
-static const char *pcTextForTask2 = "Periodic task is running\r\n";
+static const char *pcTextForTask1 = "Continuous task 1 running\r\n";
+static const char *pcTextForTask2 = "Continuous task 2 running\r\n";
+static const char *pcTextForPeriodic = "Periodic task is running\r\n";
+
+void vPrintString( const char *pcString )
+{
+
+        /* Write the string to stdout, using a critical section as a crude method of mutual exclusion. */
+
+        taskENTER_CRITICAL();
+        {
+            printf( "%s", pcString );
+            fflush( stdout );
+        }
+        taskEXIT_CRITICAL();
+
+}
 
 int main()
 {
 
 	/* Create the first task at priority 1. The priority is the second to last
 parameter. */
-	xTaskCreate(vContinuousProcessingTask, "Task 1",	1000, (void*)pcTextForTask1, 1,NULL );
+	xTaskCreate(vContinuousProcessingTask1, "Task 1",	1000, (void*)pcTextForTask1, 1,NULL );
+	xTaskCreate(vContinuousProcessingTask2, "Task 2",	1000, (void*)pcTextForTask2, 1,NULL );
+
 	/* Create the other task in exactly the same way and at the same priority. */
-	xTaskCreate(vPeriodicTask, "Task 2", 1000, (void*)pcTextForTask2, 1, NULL );
+	xTaskCreate(vPeriodicTask, "Periodic", 1000, (void*)pcTextForPeriodic, 3, NULL );
 	/* Start the scheduler so the tasks start executing. */
 	vTaskStartScheduler();
   for( ;; );
 	return 0;
 }
 
-void vContinuousProcessingTask(void *pvParameters )
+void vContinuousProcessingTask1(void *pvParameters )
 {
 	const char *pcTaskName = (char*) pvParameters;
 	for( ;; )
 	{
 		/* Print out the name of this task. */
-		printf("%s\n", pcTaskName );
+		vPrintString( pcTaskName );
+	}
+}
+void vContinuousProcessingTask2(void *pvParameters )
+{
+	const char *pcTaskName = (char*) pvParameters;
+	for( ;; )
+	{
+		/* Print out the name of this task. */
+		vPrintString( pcTaskName );
 	}
 }
 
@@ -47,8 +75,8 @@ void vPeriodicTask(void *pvParameters )
 	for( ;; )
 	{
 		/* Print out the name of this task. */
-		printf("%s\n",pcTaskName );
-		vTaskDelayUntil( &xLastWakeTime, pdMS_TO_TICKS( 250 ) );
+		vPrintString( pcTaskName );
+		vTaskDelayUntil( &xLastWakeTime, xDelay3ms );
 	}
 }
 /********************************************************/

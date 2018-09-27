@@ -84,7 +84,7 @@
 #define configQUEUE_REGISTRY_SIZE		0
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY	1
 
-#define configMAX_PRIORITIES		( 10 )
+#define configMAX_PRIORITIES		( 7 )
 
 #define configMAX_CO_ROUTINE_PRIORITIES ( 2 )
 

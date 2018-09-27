@@ -27,7 +27,6 @@ parameter. */
   for( ;; );
 	return 0;
 }
-TaskHandle_t xTask2Handle = NULL;
 void vTask1(void *pvParameters )
 {
 	const char *pcTaskName = (char*) pvParameters;

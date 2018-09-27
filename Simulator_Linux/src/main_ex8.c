@@ -23,7 +23,7 @@ int main()
 parameter. */
 	xTaskCreate(vTask1, "Task 1",	1000, (void*)pcTextForTask1, 1,NULL );
 	/* Create the other task in exactly the same way and at the same priority. */
-	xTaskCreate( vTask2, "Task 2", 1000, (void*)pcTextForTask2, 2, NULL );
+	xTaskCreate( vTask2, "Task 2", 1000, (void*)pcTextForTask2, 1, NULL );
 	/* Start the scheduler so the tasks start executing. */
 	vTaskStartScheduler();
   for( ;; );
